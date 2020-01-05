@@ -1,7 +1,5 @@
 package com.example.hello.logging;
 
-
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -14,11 +12,14 @@ import com.netflix.zuul.exception.ZuulException;
 
 @Component
 public class Logging extends ZuulFilter {
-	
+
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Override
 	public Object run() throws ZuulException {
-		// TODO Auto-generated method stub
+		HttpServletRequest httpServletRequest = RequestContext.getCurrentContext().getRequest();
+
+		logger.info("Request ->{} request uri->{}", httpServletRequest, httpServletRequest.getRequestURI());
 		return null;
 	}
 
@@ -32,7 +33,9 @@ public class Logging extends ZuulFilter {
 	public int filterOrder() {
 		// TODO Auto-generated method stub
 		HttpServletRequest httpServletRequest = RequestContext.getCurrentContext().getRequest();
-		logger.info("Request ->{} request uri->{}",httpServletRequest,httpServletRequest.getRequestURI());
+
+		logger.info("Request ->{} request uri->{}", httpServletRequest, httpServletRequest.getRequestURI());
+		System.out.println("############# " + httpServletRequest.getRequestURI());
 		return 1;
 	}
 
